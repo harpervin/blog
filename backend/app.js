@@ -1,8 +1,16 @@
-const express = require("express");
-const routes = require("./routes/index");
+import express from 'express'
+import routes from './routes/index.js'
+import cors from 'cors'
 
 const app = express();
 const port = 5000;
+
+app.use(cors({
+  origin: [
+    'http://localhost:3000',
+    'http://192.168.1.235:3000/'
+]
+}));
 
 app.use("/", routes);
 

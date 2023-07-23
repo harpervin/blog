@@ -1,8 +1,13 @@
-const express = require("express");
+import { fetchLatestBlogs } from '../db/db.js'
+
+import express from 'express';
 const router = express.Router();
 
-router.get("/", (req, res) => {
-  res.send("Home Page");
+router.get("/latestBlogs", async (req, res) => {
+  //res.send("latest blogs");
+  const blogs = await fetchLatestBlogs();
+  console.log("Fetched latest blogs from express server: ", blogs);
+  res.send(blogs)
 });
 
 router.get("/login", (req, res) => {
@@ -21,4 +26,4 @@ router.get("/drafts", (req, res) => {
     res.send("Drafts Blogs Page");
   });
 
-module.exports = router;
+export default router
