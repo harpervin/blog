@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { backendHomepage } from '../api/backend';
-import Blog from "../components/Blog.js";
+import BlogCard from "../components/BlogCard.js";
 
 export default function Home() {
   console.log('Component rendered');
@@ -25,7 +25,7 @@ export default function Home() {
         {/* <Blog author='han' created_at='29/7/2023' subtitle='Test!' text='lorem ipsum' title='My First Blog'/>
         <Blog author='han' created_at='29/7/2023' subtitle='Test!' text='lorem ipsum' title='My First Blog'/> */}
         {latestBlogs.map((blog) => (
-          <Blog key={blog.id} author={blog.author} title={blog.title} text={blog.text} created_at={blog.created_at} subtitle={blog.subtitle}/>
+          <BlogCard key={blog.id} id={blog.id} author={blog.author} title={blog.title} text={blog.text} created_at={blog.created_at} subtitle={blog.subtitle}/>
         ))}
       </div>
     </>

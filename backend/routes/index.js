@@ -1,4 +1,4 @@
-import { fetchLatestBlogs } from '../db/db.js'
+import { fetchLatestBlogs, fetchBlog } from '../db/db.js'
 
 import express from 'express';
 const router = express.Router();
@@ -6,6 +6,14 @@ const router = express.Router();
 router.get("/latestBlogs", async (req, res) => {
   //res.send("latest blogs");
   const blogs = await fetchLatestBlogs();
+  console.log("Fetched latest blogs from express server: ", blogs);
+  res.send(blogs)
+});
+
+router.get("/getBlog", async (req, res) => {
+  //res.send("latest blogs");
+  const id = req.id;
+  const blogs = await fetchBlog(id);
   console.log("Fetched latest blogs from express server: ", blogs);
   res.send(blogs)
 });

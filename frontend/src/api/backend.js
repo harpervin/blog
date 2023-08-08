@@ -6,6 +6,14 @@ async function backendHomepage () {
     return latestBlogs;
 }
 
+async function getBlog (id) {
+    console.log("id:", id)
+    const response = await axios.get('http://localhost:5000/getBlog', id)
+    const blog = response.data
+    return blog;
+}
+
 export {
     backendHomepage,
+    getBlog
 }
