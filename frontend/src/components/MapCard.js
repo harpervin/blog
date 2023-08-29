@@ -4,7 +4,7 @@ import { Link } from "react-router-dom"; // Make sure to import the Link compone
 export default function MapCard({ name, image }) {
     return (
         <>
-            <Link to={`/${name}`} className="w-1/3 m-8 flex">
+            <Link to={`/${name.toLowerCase()}`} className="w-1/3 m-8 flex">
                 <div className="w-full relative">
                     {/* <div className='font-bold text-3xl text-black'>{ name }</div> */}
                     <img

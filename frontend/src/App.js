@@ -10,10 +10,19 @@ import Navbar from "./components/Navbar";
 import BlogCard from "./components/BlogCard";
 import Blog from "./pages/Blog/[id]";
 
+import Ascent from "./pages/maps/Ascent";
+import Bind from "./pages/maps/Bind";
+import Haven from "./pages/maps/Haven";
+import Split from "./pages/maps/Split";
+import Lotus from "./pages/maps/Lotus";
+import Sunset from "./pages/maps/Sunset";
+import Fracture from "./pages/maps/Fracture";
+import Pearl from "./pages/maps/Pearl";
+
 function App() {
     return (
         <Router>
-            <div className="bg-neutral-700">
+            <div className="bg-zinc-700">
                 <Navbar />
                 <Routes>
                     <Route path="/" element={<Home />} />
@@ -24,6 +33,16 @@ function App() {
                     <Route path="/new-blog" element={<NewBlog />} />
                     <Route path="/settings" element={<Settings />} />
                     <Route path="/blog/:id" element={<Blog />} />
+
+                    <Route path="/ascent" element={<Ascent />} />
+                    <Route path="/split" element={<Split />} />
+                    <Route path="/bind" element={<Bind />} />
+                    <Route path="/haven" element={<Haven />} />
+                    <Route path="/lotus" element={<Lotus />} />
+                    <Route path="/sunset" element={<Sunset />} />
+
+                    <Route path="/fracture" element={<Fracture />} />
+                    <Route path="/pearl" element={<Pearl />} />
                 </Routes>
             </div>
         </Router>
