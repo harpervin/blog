@@ -7,8 +7,8 @@ async function backendHomepage () {
 }
 
 async function getBlog (id) {
-    console.log("id:", id)
-    const response = await axios.get('http://localhost:5000/getBlog', id)
+    console.log("frontend api call id:", id)
+    const response = await axios.get(`http://localhost:5000/getBlog/${id}`)
     const blog = response.data
     return blog;
 }

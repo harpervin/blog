@@ -5,7 +5,7 @@ export default function Login() {
     return (
         <>
             <div className="flex items-center justify-center h-screen text-white text-6xl font-bold">
-                Login
+                Lineups
             </div>
         </>
     );

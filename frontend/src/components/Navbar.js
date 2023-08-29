@@ -1,35 +1,47 @@
-import React from 'react'
-import { AiFillHome, AiOutlineUser } from 'react-icons/ai'
-import { BiSolidAddToQueue } from 'react-icons/bi'
-import { FiSettings } from 'react-icons/fi'
-import { Link } from 'react-router-dom'; // Make sure to import the Link component if you're using React Router
+import React from "react";
+import { AiFillHome, AiOutlineUser } from "react-icons/ai";
+import { FiSettings } from "react-icons/fi";
+import { SiValorant } from "react-icons/si";
+import { TbBow, TbMap2 } from "react-icons/tb";
+import { Link } from "react-router-dom";
 
 export default function Navbar() {
-  return (
-    <div className="w-auto h-16 bg-zinc-800">
-        <ul className="flex justify-evenly items-center h-full">
-            <li>
-                <Link to='/' className='text-2xl text-white'>
-                    <AiFillHome/>
+    return (
+        <div className="h-16 bg-zinc-800 flex items-center justify-between">
+            <div className="flex items-center px-6">
+                <Link to="/">
+                    <SiValorant
+                        size={25}
+                        className="text-2xl text-white transition ease-in-out delay-80 hover:-translate-y-1 hover:scale-110 hover:text-indigo-500 duration-100"
+                    />
                 </Link>
-            </li>
-            <li>
-                <Link to='/new-blog' className='text-2xl text-white '>
-                    <BiSolidAddToQueue/>
+                <Link to="/maps" className="ml-8">
+                    <TbMap2
+                        size={28}
+                        className="text-2xl text-white transition ease-in-out delay-80 hover:-translate-y-1 hover:scale-110 hover:text-indigo-500 duration-100"
+                    />
                 </Link>
-            </li>
-            <li>
-                <Link to='/settings' className='text-2xl text-white '>
-                    <FiSettings/>
+                <Link to="/lineups" className="ml-8">
+                    <TbBow
+                        size={28}
+                        className="text-2xl text-white transition ease-in-out delay-80 hover:-translate-y-1 hover:scale-110 hover:text-indigo-500 duration-100"
+                    />
                 </Link>
-            </li>
-            <li>
-                <Link to='/login' className='text-2xl text-white '>
-                    <AiOutlineUser/>
+            </div>
+            <div className="flex items-center px-6">
+                <Link to="/login" className="mr-6">
+                    <AiOutlineUser
+                        size={30}
+                        className="text-2xl text-white transition ease-in-out delay-80 hover:-translate-y-1 hover:scale-110 hover:text-indigo-500 duration-100"
+                    />
                 </Link>
-            </li>
-        </ul>
-        
-    </div>
-  )
+                <Link to="/settings">
+                    <FiSettings
+                        size={30}
+                        className="text-2xl text-white transition ease-in-out delay-80 hover:-translate-y-1 hover:scale-110 hover:text-indigo-500 duration-100"
+                    />
+                </Link>
+            </div>
+        </div>
+    );
 }

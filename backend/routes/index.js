@@ -10,12 +10,11 @@ router.get("/latestBlogs", async (req, res) => {
   res.send(blogs)
 });
 
-router.get("/getBlog", async (req, res) => {
+router.get("/getBlog/:id", async (req, res) => {
   //res.send("latest blogs");
-  const id = req.id;
-  const blogs = await fetchBlog(id);
-  console.log("Fetched latest blogs from express server: ", blogs);
-  res.send(blogs)
+  const id = req.params.id;
+  const blog = await fetchBlog(id);
+  res.send(blog)
 });
 
 router.get("/login", (req, res) => {
