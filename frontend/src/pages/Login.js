@@ -1,10 +1,38 @@
+import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
-import { backendHomepage } from "../api/backend";
+import { backendHomepage, login } from "../api/backend";
 import jett from "../assets/jettposter.jpg";
 
 export default function Login() {
+    const [email, setEmail] = useState("");
+    const [pw, setPw] = useState("");
+    const navigate = useNavigate();
+
+    const handleEmail = (e) => {
+        setEmail(e.target.value);
+    };
+
+    const handlePw = (e) => {
+        setPw(e.target.value);
+    };
+
+    const handleLogin = async () => {
+        const user_data = {
+            email: email,
+            pw: pw,
+        };
+        try {
+            const user = await login(user_data);
+            if (user) {
+                navigate("/");
+            }
+        } catch (err) {
+            console.log("Error fetching data from react: ", err);
+        }
+    };
+
     return (
         <>
             <div className="h-full w-full bg-light flex justify-center items-center my-8">
@@ -23,7 +51,9 @@ export default function Login() {
                             <input
                                 type="email"
                                 placeholder="Enter your email address..."
-                                className="outline focus:outline-2 focus:outline-blue-300 outline-1 outline-gray-300 text-md text-gray-400 focus:text-black rounded-sm h-8 w-72 px-2 m-2 color-gray bg-buttonLight"
+                                className="outline focus:outline-2 focus:outline-blue-300 outline-1 outline-gray-300 text-md placeholder-text-gray-400 text-black rounded-sm h-8 w-72 px-2 m-2 color-gray bg-buttonLight"
+                                onChange={handleEmail}
+                                value={email}
                             />
                         </label>
                         <div className="mx-2 w-72 text-left text-xs text-gray-500">
@@ -34,12 +64,17 @@ export default function Login() {
                             <input
                                 type="password"
                                 placeholder="Enter your password..."
-                                className="outline focus:outline-2 focus:outline-blue-300 outline-1 outline-gray-300 text-md text-gray-400 focus:text-black rounded-sm h-8 w-72 px-2 m-2 color-gray bg-buttonLight"
+                                className="outline focus:outline-2 focus:outline-blue-300 outline-1 outline-gray-300 text-md placeholder-text-gray-400 text-black rounded-sm h-8 w-72 px-2 m-2 color-gray bg-buttonLight"
+                                onChange={handlePw}
+                                value={pw}
                             />
                         </label>
 
                         <div>
-                            <button className="outline hover:outline-3 outline-1 outline-gray-300 text-sm text-black rounded-sm h-8 w-72 px-2 m-2">
+                            <button
+                                onClick={handleLogin}
+                                className="outline hover:outline-3 outline-1 outline-gray-300 text-sm text-black rounded-sm h-8 w-72 px-2 m-2"
+                            >
                                 Continue with password
                             </button>
                         </div>

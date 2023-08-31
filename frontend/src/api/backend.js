@@ -13,11 +13,11 @@ async function getBlog(id) {
     return blog;
 }
 
-async function checkEmailValidity(email) {
-    console.log("frontend login api call: ", email);
-    const response = await axios.post("http://localhost:5000/check_email");
+async function login(user) {
+    const response = await axios.post("http://localhost:5000/login", user);
     const userInfo = response.data;
+    console.log("userinfo: ", response);
     return userInfo;
 }
 
-export { backendHomepage, getBlog };
+export { backendHomepage, getBlog, login };

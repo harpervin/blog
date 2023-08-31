@@ -33,4 +33,4 @@ async function fetchBlog(id) {
 //     .select()
 // }
 
-export { fetchLatestBlogs, fetchBlog };
+export { fetchLatestBlogs, fetchBlog, supabase };
