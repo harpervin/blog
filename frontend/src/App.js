@@ -3,6 +3,7 @@ import Home from "./pages/Home";
 import Maps from "./pages/Maps";
 import Lineups from "./pages/Lineups";
 import Login from "./pages/Login";
+import Register from "./pages/Register";
 import NewBlog from "./pages/NewBlog";
 import Settings from "./pages/Settings";
 import Navbar from "./components/Navbar";
@@ -28,6 +29,7 @@ function App() {
                     <Route path="/maps" element={<Maps />} />
                     <Route path="/lineups" element={<Lineups />} />
                     <Route path="/login" element={<Login />} />
+                    <Route path="/register" element={<Register />} />
                     <Route path="/new-blog" element={<NewBlog />} />
                     <Route path="/settings" element={<Settings />} />
                     <Route path="/blog/:id" element={<Blog />} />

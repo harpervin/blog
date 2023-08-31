@@ -17,6 +17,15 @@ router.get("/getBlog/:id", async (req, res) => {
   res.send(blog)
 });
 
+router.post("/check_email", async (req, res) => {
+  const { email } = req.body;
+  
+  const { data: { user } } = await supabase.auth.getUser()
+
+
+  res.send("Login Page");
+});
+
 router.get("/login", (req, res) => {
   res.send("Login Page");
 });

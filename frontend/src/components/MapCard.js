@@ -12,7 +12,7 @@ export default function MapCard({ name, image }) {
                         src={image}
                         alt={name}
                     />
-                    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex items-center justify-center text-white text-6xl font-bold">
+                    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex items-center justify-center text-white text-4xl font-bold">
                         {name}
                     </div>
                 </div>

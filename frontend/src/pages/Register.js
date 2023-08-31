@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-
 import { backendHomepage } from "../api/backend";
 import jett from "../assets/jettposter.jpg";
 
-export default function Login() {
+function loginButton() {}
+
+export default function Register() {
     return (
         <>
             <div className="h-full w-full bg-light flex justify-center items-center my-8">
                 {/* <img className="w-1/2 text-white text-center align-items bg-white brightness-50" src={jett} alt="jett"/> */}
                 <div className="text-center">
-                    <h1 className="font-bold text-5xl bg-white m-2">Log in</h1>
+                    <h1 className="font-bold text-5xl bg-white m-2">Sign up</h1>
 
                     <hr className="m-8 w-72" />
 
@@ -38,20 +39,26 @@ export default function Login() {
                             />
                         </label>
 
+                        <label>
+                            <input
+                                type="password"
+                                placeholder="Re-enter your password..."
+                                className="outline focus:outline-2 focus:outline-blue-300 outline-1 outline-gray-300 text-md text-gray-400 focus:text-black rounded-sm h-8 w-72 px-2 m-2 color-gray bg-buttonLight"
+                            />
+                        </label>
+
                         <div>
                             <button className="outline hover:outline-3 outline-1 outline-gray-300 text-sm text-black rounded-sm h-8 w-72 px-2 m-2">
                                 Continue with password
                             </button>
                         </div>
 
-                        <button className="text-gray-400 text-sm underline mt-4 my-2">
-                            Forgot Password?
-                        </button>
                         <Link
-                            to="/register"
-                            className="text-gray-400 text-sm underline"
+                            to="/login"
+                            onclick={loginButton}
+                            className="text-gray-400 text-sm underline my-8"
                         >
-                            Don't have an account? Sign Up
+                            Already have an account? Log in
                         </Link>
                     </div>
                 </div>
