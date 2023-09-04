@@ -75,8 +75,10 @@
 
 import express from "express";
 import bcrypt from "bcrypt";
+import jwt from 'jsonwebtoken';
 import User from "../models/user.model.js";
 import logger from "../logger/index.js";
+
 
 const router = express.Router();
 
@@ -85,14 +87,21 @@ router.post("/login", async (req, res) => {
 
     try {
         const user = await User.findOne({ email });
+        
         if (!user) {
             res.status(404).json({ message: "User not found" });
-        } else {
+        } 
+        
+        else {
             const match = await bcrypt.compare(password, user.password);
 
             if (!match) {
                 res.status(400).json({ error: "Invalid password" });
-            } else {
+            } 
+            
+            else {
+                logger.debug(user)
+                // const token = jwt.sign({ user_id: user.})
                 res.status(200).json({ message: "Login successful" });
             }
         }
