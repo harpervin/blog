@@ -13,11 +13,23 @@ async function getBlog(id) {
     return blog;
 }
 
-async function login(user) {
-    const response = await axios.post("http://localhost:5000/login", user);
+async function getUser() {
+    const response = await axios.post("http://localhost:5000/getUser");
     const userInfo = response.data;
     console.log("userinfo: ", response);
     return userInfo;
 }
 
-export { backendHomepage, getBlog, login };
+async function login(user) {
+    const response = await axios.post("http://localhost:5000/api/login", user);
+    console.log("response: ", response);
+    return response;
+}
+
+async function signup(user) {
+    const response = await axios.post("http://localhost:5000/api/signup", user);
+    console.log("response: ", response);
+    return response;
+}
+
+export { backendHomepage, getBlog, login, signup };

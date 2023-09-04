@@ -14,7 +14,7 @@ import Pearl from "../assets/Pearl.png";
 export default function Maps() {
     return (
         <>
-            <div className="flex mx-8 pt-6 text-white text-2xl font-bold">
+            <div className="flex mx-8 pt-6 text-black text-2xl font-bold">
                 E7:A1 Map Rotation
             </div>
             <div className="flex">
@@ -27,7 +27,7 @@ export default function Maps() {
                 <MapCard name="Lotus" image={Lotus} />
                 <MapCard name="Sunset" image={Sunset} />
             </div>
-            <div className="flex mx-8 mt-6 text-white text-2xl font-bold">
+            <div className="flex mx-8 mt-6 text-black text-2xl font-bold">
                 Out of rotation
             </div>
             <div className="flex">

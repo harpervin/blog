@@ -6,9 +6,15 @@ import { backendHomepage, login } from "../api/backend";
 import jett from "../assets/jettposter.jpg";
 
 export default function Login() {
+    const [error, setError] = useState("");
     const [email, setEmail] = useState("");
     const [pw, setPw] = useState("");
     const navigate = useNavigate();
+
+    const incorrectDetails = "Incorrect password.";
+    const invalidUser = "No account exists with that email.";
+    const emptyEmail = "Please enter an email.";
+    const emptyPw = "Please enter a password.";
 
     const handleEmail = (e) => {
         setEmail(e.target.value);
@@ -21,16 +27,31 @@ export default function Login() {
     const handleLogin = async () => {
         const user_data = {
             email: email,
-            pw: pw,
+            password: pw,
         };
-        try {
-            const user = await login(user_data);
-            if (user) {
-                navigate("/");
-            }
-        } catch (err) {
-            console.log("Error fetching data from react: ", err);
+
+        if (email === "") {
+            setError(emptyEmail);
         }
+        else if (pw === "") {
+            setError(emptyPw);
+        }
+        else {
+            try {
+                await login(user_data);
+                navigate("/");
+            } catch (err) {
+                console.log(err);
+                const status = err.response.status;
+                console.log(status);
+                if (status === 400) {
+                    setError(incorrectDetails);
+                } else if (status === 404) {
+                    setError(invalidUser);
+                }
+            }
+        }
+
     };
 
     return (
@@ -73,13 +94,18 @@ export default function Login() {
                         <div>
                             <button
                                 onClick={handleLogin}
-                                className="outline hover:outline-3 outline-1 outline-gray-300 text-sm text-black rounded-sm h-8 w-72 px-2 m-2"
+                                className="outline hover:outline-3 outline-1 outline-gray-300 shadow-inner text-sm text-black rounded-sm h-8 w-72 px-2 m-2"
                             >
                                 Continue with password
                             </button>
                         </div>
+                        {error && (
+                            <div className="text-red-400 text-sm mt-2">
+                                {error}
+                            </div>
+                        )}
 
-                        <button className="text-gray-400 text-sm underline mt-4 my-2">
+                        <button className="text-gray-400 text-sm underline mt-2 my-2">
                             Forgot Password?
                         </button>
                         <Link

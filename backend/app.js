@@ -1,6 +1,8 @@
 import express from "express";
+import logger from "./logger/index.js";
 import routes from "./routes/index.js";
 import cors from "cors";
+import connectToMongoDB from "./db/index.js";
 
 const app = express();
 app.use(express.json());
@@ -14,8 +16,16 @@ app.use(
     })
 );
 
-app.use("/", routes);
+app.use("/api", routes);
 
-app.listen(port, () => {
-    console.log(`Express app is running on http://localhost:${port}`);
-});
+async function startServer() {
+    // Connect to MongoDB Database
+    await connectToMongoDB();
+
+    // Run Express server
+    app.listen(port, () => {
+        logger.info(`Express app is running on http://localhost:${port}`);
+    });
+}
+
+startServer();
