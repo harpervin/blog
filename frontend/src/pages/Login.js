@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 
 import { backendHomepage, login } from "../api/backend";
 import jett from "../assets/jettposter.jpg";
@@ -32,14 +33,20 @@ export default function Login() {
 
         if (email === "") {
             setError(emptyEmail);
-        }
-        else if (pw === "") {
+        } else if (pw === "") {
             setError(emptyPw);
-        }
-        else {
+        } else {
             try {
-                await login(user_data);
-                navigate("/");
+                const token = localStorage.getItem("jwtToken");
+
+                // if not logged in
+                if (!token) {
+                    const response = await login(user_data);
+                    navigate("/");
+                }
+                axios.defaults.headers.common["Authorization"] =
+                    "Bearer " + token;
+
             } catch (err) {
                 console.log(err);
                 const status = err.response.status;
@@ -51,7 +58,6 @@ export default function Login() {
                 }
             }
         }
-
     };
 
     return (

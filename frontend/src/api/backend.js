@@ -13,16 +13,16 @@ async function getBlog(id) {
     return blog;
 }
 
-async function getUser() {
-    const response = await axios.post("http://localhost:5000/getUser");
-    const userInfo = response.data;
-    console.log("userinfo: ", response);
-    return userInfo;
+async function lineups() {
+    const response = await axios.get("http://localhost:5000/api/lineups");
+    // const userInfo = response.data;
+    console.log("response: ", response);
+    return response;
 }
 
 async function login(user) {
     const response = await axios.post("http://localhost:5000/api/login", user);
-    console.log("response: ", response);
+    // console.log("response: ", response);
     return response;
 }
 
@@ -32,4 +32,10 @@ async function signup(user) {
     return response;
 }
 
-export { backendHomepage, getBlog, login, signup };
+// async function getPlaybook(user) {
+//     const response = await axios.post(`http://localhost:5000/api/${user}/playbook`);
+//     console.log("response: ", response);
+//     return response;
+// }
+
+export { backendHomepage, getBlog, login, signup, lineups };

@@ -12,6 +12,17 @@ import Fracture from "../assets/Fracture.png";
 import Pearl from "../assets/Pearl.png";
 
 export default function Maps() {
+    // useEffect(() => {
+    //     const getPlaybook = async () => {
+    //         try {
+    //             const response = await getPlaybook();
+    //         } catch (err) {
+    //             console.log("Error fetching data from react: ", err);
+    //         }
+    //     };
+    //     getUser();
+    // }, []);
+
     return (
         <>
             <div className="flex mx-8 pt-6 text-black text-2xl font-bold">

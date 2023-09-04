@@ -1,26 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { getUser } from "../api/backend";
+import { home } from "../api/backend";
 
 export default function Home() {
     const [user, setUser] = useState([]);
 
     //fetchHomepageBlogs();
     // const [latestBlogs, setLatestBlogs] = useState([]);
-    useEffect(() => {
-        const getUser = async () => {
-            // try {
-            //     const user_data = await getUser();
-            //     setUser(user_data);
-            //     console.log(
-            //         "Blogs from GET request to express server: ",
-            //         user.data
-            //     );
-            // } catch (err) {
-            //     console.log("Error fetching data from react: ", err);
-            // }
-        };
-        getUser();
-    }, []);
 
     return (
         <>

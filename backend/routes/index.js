@@ -75,10 +75,11 @@
 
 import express from "express";
 import bcrypt from "bcrypt";
-import jwt from 'jsonwebtoken';
+import jwt from "jsonwebtoken";
+
 import User from "../models/user.model.js";
 import logger from "../logger/index.js";
-
+import authenticateToken from "../middlewares/index.js";
 
 const router = express.Router();
 
@@ -87,27 +88,29 @@ router.post("/login", async (req, res) => {
 
     try {
         const user = await User.findOne({ email });
-        
-        if (!user) {
-            res.status(404).json({ message: "User not found" });
-        } 
-        
-        else {
-            const match = await bcrypt.compare(password, user.password);
 
-            if (!match) {
-                res.status(400).json({ error: "Invalid password" });
-            } 
-            
-            else {
-                logger.debug(user)
-                // const token = jwt.sign({ user_id: user.})
-                res.status(200).json({ message: "Login successful" });
-            }
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
         }
+
+        const match = await bcrypt.compare(password, user.password);
+
+        if (!match) {
+            return res.status(400).json({ error: "Invalid password" });
+        }
+
+        logger.debug(user._doc);
+
+        // Creating JWT for user authentication
+        const token = jwt.sign({ user_id: user._id }, process.env.SECRET_KEY, {
+            expiresIn: "1h",
+        });
+
+        // Sending success message and JWT
+        return res.status(200).json({ token:token, username:user.username });
     } catch (e) {
         console.log(e);
-        res.status(500).json({ error: e.message });
+        return res.status(500).json({ error: e.message });
     }
 });
 
@@ -132,6 +135,11 @@ router.post("/signup", async (req, res) => {
         logger.error(e.code);
         res.status(401).json({ error: e.message });
     }
+});
+
+router.get("/lineups", authenticateToken, (req, res) => {
+    logger.info("Authenticated");
+    logger.info(req.user);
 });
 
 export default router;
