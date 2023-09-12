@@ -78,7 +78,6 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
 import User from "../models/user.model.js";
-import logger from "../logger/index.js";
 import authenticateToken from "../middlewares/index.js";
 
 const router = express.Router();
@@ -99,15 +98,30 @@ router.post("/login", async (req, res) => {
             return res.status(400).json({ error: "Invalid password" });
         }
 
-        logger.debug(user._doc);
+        console.log(user._doc);
 
-        // Creating JWT for user authentication
-        const token = jwt.sign({ user_id: user._id }, process.env.SECRET_KEY, {
-            expiresIn: "1h",
-        });
+        // Creating access token
+        const accessToken = jwt.sign(
+            { user_id: user._id },
+            process.env.ACCESS_SECRET_KEY,
+            {
+                expiresIn: "15m",
+            }
+        );
+
+        // Creating access token
+        const refreshToken = jwt.sign(
+            { user_id: user._id },
+            process.env.REFRESH_SECRET_KEY,
+            {
+                expiresIn: "1d",
+            }
+        );
 
         // Sending success message and JWT
-        return res.status(200).json({ token:token, username:user.username });
+        return res
+            .status(200)
+            .json({ accessToken, refreshToken, username: user.username });
     } catch (e) {
         console.log(e);
         return res.status(500).json({ error: e.message });
@@ -129,17 +143,17 @@ router.post("/signup", async (req, res) => {
 
     try {
         await newUser.save();
-        logger.debug("User registered successfully");
+        console.log("User registered successfully");
         res.status(201).json({ message: "User registered successfully" });
     } catch (e) {
-        logger.error(e.code);
+        console.log(e.code);
         res.status(401).json({ error: e.message });
     }
 });
 
 router.get("/lineups", authenticateToken, (req, res) => {
-    logger.info("Authenticated");
-    logger.info(req.user);
+    console.log("Authenticated");
+    console.log(req.user);
 });
 
 export default router;

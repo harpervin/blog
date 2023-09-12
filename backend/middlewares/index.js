@@ -1,9 +1,8 @@
 import jwt from "jsonwebtoken";
-import logger from "../logger/index.js";
 
 function authenticateToken(req, res, next) {
     try {
-        logger.debug("authenticate Token running");
+        console.log("authenticate Token running");
 
         const bearerToken = req.headers.authorization;
         // const token = req.cookies.jwt;
@@ -16,7 +15,7 @@ function authenticateToken(req, res, next) {
 
         jwt.verify(token, process.env.SECRET_KEY, (err, user) => {
             if (err) {
-                logger.error(err);
+                console.log(err);
                 return res.status(403).json({ error: "Invalid token" });
             }
             // what does this mean
@@ -26,7 +25,7 @@ function authenticateToken(req, res, next) {
             next();
         });
     } catch (e) {
-        logger.error(e);
+        console.log(e);
     }
 }
 

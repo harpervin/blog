@@ -37,16 +37,46 @@ export default function Login() {
             setError(emptyPw);
         } else {
             try {
-                const token = localStorage.getItem("jwtToken");
+                const response = await login(user_data);
 
-                // if not logged in
-                if (!token) {
-                    const response = await login(user_data);
-                    navigate("/");
+                if (response) {
+                    console.log("response ok");
+                    const data = response.data;
+                    const accessToken = data.accessToken;
+                    const refreshToken = data.refreshToken;
+                    const username = data.username;
+
+                    const accessTokenExpMinutes = 15;
+                    const accessTokenExpDate = new Date(
+                        new Date().getTime() + accessTokenExpMinutes * 60 * 1000
+                    );
+
+                    const refreshTokenExpMinutes = 7;
+                    const refreshTokenExpDate = new Date(
+                        new Date().getTime() +
+                            refreshTokenExpMinutes * 24 * 60 * 60 * 1000
+                    );
+
+                    console.log("before cookies");
+
+                    Cookies.set("access_token", accessToken, {
+                        expires: accessTokenExpDate,
+                    });
+
+                    Cookies.set("refresh_token", refreshToken, {
+                        expires: refreshTokenExpDate,
+                    });
+
+                    Cookies.set("username", username);
+
+                    console.log("set cookies");
+
+                    // localStorage.setItem("at", accessToken);
+                    // localStorage.setItem("rt", refreshToken);
+                    // localStorage.setItem("username", username);
                 }
-                axios.defaults.headers.common["Authorization"] =
-                    "Bearer " + token;
 
+                navigate("/");
             } catch (err) {
                 console.log(err);
                 const status = err.response.status;

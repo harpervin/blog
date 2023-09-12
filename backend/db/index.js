@@ -30,14 +30,13 @@
 // export { fetchLatestBlogs, fetchBlog, supabase };
 
 import mongoose from "mongoose";
-import logger from "../logger/index.js";
 
 async function connectToMongoDB() {
     try {
         await mongoose.connect(process.env.DB_URL);
-        logger.info("Connected to MongoDB Database");
-    } catch (e) {
-        logger.error(e);
+        console.log("Connected to MongoDB Database");
+    } catch (err) {
+        console.log(err);
     }
 }
 

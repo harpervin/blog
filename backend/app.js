@@ -1,13 +1,12 @@
 import express from "express";
 import cors from "cors";
-import cookieParser from "cookie-parser";
-
-import logger from "./logger/index.js";
+import { config } from "dotenv";
 import routes from "./routes/index.js";
 import connectToMongoDB from "./db/index.js";
 
+config();
 const app = express();
-app.use(cookieParser());
+// app.use(cookieParser(process.env.COOKIE_SECRET_KEY));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -33,7 +32,7 @@ async function startServer() {
 
     // Run Express server
     app.listen(port, () => {
-        logger.info(`Express app is running on http://localhost:${port}`);
+        console.log(`Express app is running on http://localhost:${port}`);
     });
 }
 

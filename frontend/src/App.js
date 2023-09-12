@@ -28,8 +28,14 @@ function App() {
                     <Route path="/" element={<Home />} />
                     <Route path="/maps" element={<Maps />} />
                     <Route path="/lineups" element={<Lineups />} />
+
                     <Route path="/login" element={<Login />} />
                     <Route path="/register" element={<Register />} />
+
+                    {/* new routes to implement */}
+                    <Route path="/logout" element={<Home />} />
+                    <Route path="/account" element={<Home />} />
+
                     <Route path="/new-blog" element={<NewBlog />} />
                     <Route path="/settings" element={<Settings />} />
                     <Route path="/blog/:id" element={<Blog />} />
