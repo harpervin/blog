@@ -10,6 +10,10 @@ import { reduxLogin, reduxLogout } from "../util/actions/auth";
 // Cookie handling
 import Cookies from "js-cookie";
 
+// Backend functions
+import { getNewTokens } from "../api/backend";
+import { setAccessToken, setRefreshToken } from "../util/setCookies";
+
 // React Icons
 import { AiOutlineUser } from "react-icons/ai";
 import { SiValorant } from "react-icons/si";
@@ -65,16 +69,31 @@ export default function Navbar() {
         };
     }, []);
 
+    const access_token = Cookies.get("access_token");
+    const refresh_token = Cookies.get("refresh_token");
+    const username = Cookies.get("username");
+
+    const checkTokens = async () => {
+        const response = await getNewTokens(refresh_token);
+        const newAccessToken = response.accessToken;
+        const newRefreshToken = response.refreshToken;
+        setAccessToken(newAccessToken);
+        setRefreshToken(newRefreshToken);
+        dispatch(reduxLogin(username));
+    };
+
     useEffect(() => {
-        const access_token = Cookies.get("access_token");
-        if (access_token) {
+        if (access_token && refresh_token && username) {
             const username = Cookies.get("username");
             dispatch(reduxLogin(username));
             setUser(username);
+        } else if (!access_token && refresh_token) {
+            checkTokens();
         } else {
             dispatch(reduxLogout());
         }
     }, []);
+
     return (
         <div className="flex justify-center">
             <div className="w-11/12">

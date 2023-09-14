@@ -1,6 +1,3 @@
-// REST functions
-import axios from "axios";
-
 // React
 import React, { useEffect, useState } from "react";
 
@@ -17,6 +14,11 @@ import Cookies from "js-cookie";
 
 import { backendHomepage, login } from "../api/backend";
 import jett from "../assets/jettposter.jpg";
+import {
+    setAccessToken,
+    setRefreshToken,
+    setUsername,
+} from "../util/setCookies";
 
 export default function Login() {
     const [error, setError] = useState("");
@@ -60,36 +62,11 @@ export default function Login() {
                     const refreshToken = data.refreshToken;
                     const username = data.username;
 
-                    const accessTokenExpMinutes = 15;
-                    const accessTokenExpDate = new Date(
-                        new Date().getTime() + accessTokenExpMinutes * 60 * 1000
-                    );
-
-                    const refreshTokenExpMinutes = 7;
-                    const refreshTokenExpDate = new Date(
-                        new Date().getTime() +
-                            refreshTokenExpMinutes * 24 * 60 * 60 * 1000
-                    );
-
-                    console.log("before cookies");
-
-                    Cookies.set("access_token", accessToken, {
-                        expires: accessTokenExpDate,
-                    });
-
-                    Cookies.set("refresh_token", refreshToken, {
-                        expires: refreshTokenExpDate,
-                    });
-
-                    Cookies.set("username", username);
-
-                    console.log("set cookies");
+                    setAccessToken(accessToken);
+                    setRefreshToken(refreshToken);
+                    setUsername(username);
 
                     dispatch(reduxLogin(username));
-
-                    // localStorage.setItem("at", accessToken);
-                    // localStorage.setItem("rt", refreshToken);
-                    // localStorage.setItem("username", username);
                 }
 
                 navigate("/");

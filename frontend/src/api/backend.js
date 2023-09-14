@@ -32,10 +32,23 @@ async function signup(user) {
     return response;
 }
 
+async function getNewTokens(refresh_token) {
+    const refresh_token_obj = {
+        refresh_token: refresh_token,
+    };
+    const response = await axios.post(
+        "http://localhost:5000/api/getNewAccessToken",
+        refresh_token_obj
+    );
+    const data = response.data;
+    console.log(response.data);
+    return data;
+}
+
 // async function getPlaybook(user) {
 //     const response = await axios.post(`http://localhost:5000/api/${user}/playbook`);
 //     console.log("response: ", response);
 //     return response;
 // }
 
-export { backendHomepage, getBlog, login, signup, lineups };
+export { backendHomepage, getBlog, login, signup, lineups, getNewTokens };

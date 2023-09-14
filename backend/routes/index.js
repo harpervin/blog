@@ -1,84 +1,10 @@
-// import { fetchLatestBlogs, fetchBlog, supabase } from "../db/index.js";
-
-// router.get("/latestBlogs", async (req, res) => {
-//     //res.send("latest blogs");
-//     const blogs = await fetchLatestBlogs();
-//     console.log("Fetched latest blogs from express server: ", blogs);
-//     res.send(blogs);
-// });
-
-// router.get("/getBlog/:id", async (req, res) => {
-//     //res.send("latest blogs");
-//     const id = req.params.id;
-//     const blog = await fetchBlog(id);
-//     res.send(blog);
-// });
-
-// router.post("/getUser", async (req, res) => {
-//     const {
-//         data: { user },
-//     } = await supabase.auth.getUser();
-//     console.log(data);
-//     res.send(data);
-// });
-
-// router.post("/login", async (req, res) => {
-//     console.log(req.body);
-//     const { email, pw } = req.body;
-//     let { data, error } = await supabase.auth.signInWithPassword({
-//         email: email,
-//         password: pw,
-//     });
-//     console.log(data);
-//     res.send(data);
-// });
-
-// router.post("/register", async (req, res) => {
-//     console.log(req.body);
-//     const { email, pw, username } = req.body;
-
-//     let { data, error } = await supabase.auth.signUp({
-//         email: email,
-//         password: pw,
-//     });
-
-//     if (data.user) {
-//         console.log(data);
-//         let { insert_data, error } = await supabase.from("usernames").insert([
-//             {
-//                 user_id: user.id, // Link to the user's authentication ID
-//                 username: username,
-//                 // Other profile data...
-//             },
-//         ]);
-
-//         if (error) {
-//             console.error("username error:", error);
-//             res.send(error);
-//         } else {
-//             console.log("Profile created:", insert_data);
-//             res.send(insert_data, username);
-//         }
-//     } else if (error) {
-//         console.log("signup error: ", error.status);
-//         res.sendStatus(error.status);
-//     }
-// });
-
-// router.get("/featured", (req, res) => {
-//     res.send("Featured Blogs Page. View all featured blogs here!");
-// });
-
-// router.get("/drafts", (req, res) => {
-//     res.send("Drafts Blogs Page");
-// });
-
 import express from "express";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
 import User from "../models/user.model.js";
 import authenticateToken from "../middlewares/index.js";
+import { newAccessToken, newRefreshToken } from "../controller/auth.js";
 
 const router = express.Router();
 
@@ -151,9 +77,37 @@ router.post("/signup", async (req, res) => {
     }
 });
 
-router.get("/lineups", authenticateToken, (req, res) => {
-    console.log("Authenticated");
-    console.log(req.user);
+router.post("/getNewAccessToken", (req, res) => {
+    try {
+        const data = req.body;
+        const refresh_token = data["refresh_token"];
+        console.log(refresh_token);
+
+        jwt.verify(
+            refresh_token,
+            process.env.REFRESH_SECRET_KEY,
+            (err, user) => {
+                if (err) {
+                    console.log(err);
+                    return res
+                        .status(403)
+                        .json({ error: "Invalid refresh token" });
+                }
+
+                if (user) {
+                    const accessToken = newAccessToken(user);
+                    const refreshToken = newRefreshToken(user);
+                    // Sending success message and JWT
+                    return res.status(200).json({ accessToken, refreshToken });
+                }
+            }
+        );
+    } catch (e) {
+        console.log(e);
+        return res.status(500).json({ error: e.message });
+    }
 });
+
+router.get("/lineups", (req, res) => {});
 
 export default router;
