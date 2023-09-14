@@ -6,9 +6,11 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import NewBlog from "./pages/NewBlog";
 import Settings from "./pages/Settings";
+import Myprofile from "./pages/Myprofile";
+import Blog from "./pages/Blog/[id]";
+
 import Navbar from "./components/Navbar";
 import BlogCard from "./components/BlogCard";
-import Blog from "./pages/Blog/[id]";
 
 import Ascent from "./pages/maps/Ascent";
 import Bind from "./pages/maps/Bind";
@@ -34,7 +36,7 @@ function App() {
 
                     {/* new routes to implement */}
                     <Route path="/logout" element={<Home />} />
-                    <Route path="/account" element={<Home />} />
+                    <Route path="/myprofile" element={<Myprofile />} />
 
                     <Route path="/new-blog" element={<NewBlog />} />
                     <Route path="/settings" element={<Settings />} />

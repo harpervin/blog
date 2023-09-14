@@ -1,6 +1,18 @@
+// REST functions
 import axios from "axios";
+
+// React
 import React, { useEffect, useState } from "react";
+
+// React Redux
+import { useDispatch } from "react-redux";
+import { reduxLogin } from "../util/actions/auth";
+
+// React Router
 import { Link, useNavigate } from "react-router-dom";
+import { useHistory } from "react-router";
+
+// Cookie handling
 import Cookies from "js-cookie";
 
 import { backendHomepage, login } from "../api/backend";
@@ -11,6 +23,8 @@ export default function Login() {
     const [email, setEmail] = useState("");
     const [pw, setPw] = useState("");
     const navigate = useNavigate();
+
+    const dispatch = useDispatch();
 
     const incorrectDetails = "Incorrect password.";
     const invalidUser = "No account exists with that email.";
@@ -70,6 +84,8 @@ export default function Login() {
                     Cookies.set("username", username);
 
                     console.log("set cookies");
+
+                    dispatch(reduxLogin(username));
 
                     // localStorage.setItem("at", accessToken);
                     // localStorage.setItem("rt", refreshToken);
