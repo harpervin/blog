@@ -7,13 +7,12 @@ import { reduxLogin } from "../util/actions/auth";
 
 // React Router
 import { Link, useNavigate } from "react-router-dom";
-import { useHistory } from "react-router";
 
-// Cookie handling
-import Cookies from "js-cookie";
-
+// Assets
 import { backendHomepage, login } from "../api/backend";
 import jett from "../assets/jettposter.jpg";
+
+// Setting Cookies
 import {
     setAccessToken,
     setRefreshToken,
@@ -61,6 +60,8 @@ export default function Login() {
                     const accessToken = data.accessToken;
                     const refreshToken = data.refreshToken;
                     const username = data.username;
+
+                    console.log(accessToken);
 
                     setAccessToken(accessToken);
                     setRefreshToken(refreshToken);

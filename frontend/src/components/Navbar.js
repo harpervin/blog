@@ -19,6 +19,7 @@ import { AiOutlineUser } from "react-icons/ai";
 import { SiValorant } from "react-icons/si";
 import { TbBow, TbMap2 } from "react-icons/tb";
 import { Link, useNavigate } from "react-router-dom";
+import { BiDotsVerticalRounded } from "react-icons/bi";
 
 export default function Navbar() {
     const [user, setUser] = useState("");
@@ -47,6 +48,10 @@ export default function Navbar() {
 
     const handleLogin = () => {
         navigate("/login");
+    };
+
+    const handleRegister = () => {
+        navigate("/register");
     };
 
     useEffect(() => {
@@ -92,29 +97,29 @@ export default function Navbar() {
         } else {
             dispatch(reduxLogout());
         }
-    }, []);
+    }, [dispatch, access_token, refresh_token]);
 
     return (
         <div className="flex justify-center">
-            <div className="w-11/12">
-                <div className="h-16 bg-light flex items-center justify-between">
+            <div className="w-full">
+                <div className="h-14 bg-light flex items-center justify-between">
                     <div className="flex items-center px-6">
                         <Link to="/">
                             <SiValorant
                                 size={25}
-                                className="text-2xl text-black transition ease-in-out delay-80 hover:-translate-y-1 hover:scale-110 hover:text-indigo-500 duration-100"
+                                className="text-2xl text-black transition ease-in-out delay-80 rounded-md  hover:bg-purple-200 duration-100 h-10 w-10 p-2"
                             />
                         </Link>
-                        <Link to="/maps" className="ml-8">
+                        <Link to="/maps" className="ml-4">
                             <TbMap2
                                 size={28}
-                                className="text-2xl text-black transition ease-in-out delay-80 hover:-translate-y-1 hover:scale-110 hover:text-indigo-500 duration-100"
+                                className="text-2xl text-black transition ease-in-out delay-80 rounded-md  hover:bg-purple-200 duration-100 h-10 w-10 p-2"
                             />
                         </Link>
-                        <Link to="/lineups" className="ml-8">
+                        <Link to="/lineups" className="ml-4">
                             <TbBow
                                 size={28}
-                                className="text-2xl text-black transition ease-in-out delay-80 hover:-translate-y-1 hover:scale-110 hover:text-indigo-500 duration-100"
+                                className="text-2xl text-black transition ease-in-out delay-80 rounded-md  hover:bg-purple-200 duration-100 h-10 w-10 p-2"
                             />
                         </Link>
                     </div>
@@ -141,7 +146,7 @@ export default function Navbar() {
                                             onClick={dropdown}
                                         >
                                             <a
-                                                class="text-gray-700 block px-4 py-2 text-sm hover:text-purple-500 hover:bg-gray-100"
+                                                class="text-gray-700 block p-4 py-2 text-sm hover:text-purple-500 hover:bg-gray-100"
                                                 role="menuitem"
                                                 tabindex="-1"
                                                 id="menu-item-0"
@@ -151,13 +156,13 @@ export default function Navbar() {
                                         </Link>
                                     </div>
 
-                                    <div class="">
+                                    <div class="" role="none">
                                         <Link to="/settings" onClick={dropdown}>
                                             <a
                                                 class="text-gray-700 block px-4 py-2 text-sm hover:text-purple-500 hover:bg-gray-100"
                                                 role="menuitem"
                                                 tabindex="-1"
-                                                id="menu-item-2"
+                                                id="menu-item-1"
                                             >
                                                 Settings
                                             </a>
@@ -169,7 +174,7 @@ export default function Navbar() {
                                                 class="text-gray-700 block px-4 py-2 text-sm hover:text-purple-500 hover:bg-gray-100"
                                                 role="menuitem"
                                                 tabindex="-1"
-                                                id="menu-item-4"
+                                                id="menu-item-2"
                                             >
                                                 Logout
                                             </a>
@@ -179,12 +184,28 @@ export default function Navbar() {
                             </div>
                         )}
                         {!isAuthenticated && (
-                            <button
-                                onClick={handleLogin}
-                                className="hover:bg-purple-400 text-sm text-white font-bold bg-purple-500 rounded-sm h-8 w-18 px-2 my-8"
-                            >
-                                Login
-                            </button>
+                            <>
+                                <Link to="/login" className="ml-2">
+                                    <div
+                                        className="flex items-center justify-center hover:bg-gray-300 text-sm text-black font-bold bg-gray-200 rounded-md h-8 w-18 px-2 my-8 w-16"
+                                    >
+                                        Log In
+                                    </div>
+                                </Link>
+                                <Link to="/register" className="ml-2">
+                                    <div
+                                        className="flex items-center justify-center hover:bg-purple-600 text-sm text-white font-bold bg-purple-500 rounded-md h-8 w-18 px-1 my-8 w-16"
+                                    >
+                                        Sign up
+                                    </div>
+                                </Link>
+                                <Link to="/" className="ml-2">
+                                    <BiDotsVerticalRounded
+                                        size={28}
+                                        className="text-2xl text-black transition ease-in-out delay-80 rounded-md  hover:bg-purple-200 duration-100 h-8 w-8 p-1"
+                                    />
+                                </Link>
+                            </>
                         )}
                         {/* <Link to="/settings">
                             <FiSettings
