@@ -53,7 +53,7 @@ export default function Home() {
                         <div>
                             <button
                                 onClick={handleLogin}
-                                className="hover:bg-purple-400 text-sm text-white font-bold bg-purple-500 rounded-sm h-8 w-18 px-2 my-8"
+                                className="hover:bg-purple-400 text-sm text-white font-bold bg-purple-500 rounded-md h-8 w-18 px-2 my-8"
                             >
                                 Login
                             </button>
@@ -81,13 +81,13 @@ export default function Home() {
                         <div>
                             <button
                                 onClick={handleLogin}
-                                className="hover:bg-purple-400 text-sm text-white font-bold bg-purple-500 rounded-sm h-8 w-18 px-2 my-4"
+                                className="hover:bg-purple-600 text-sm text-white font-bold bg-purple-500 rounded-md h-8 w-18 px-2 my-4"
                             >
                                 Create a strategy
                             </button>
                             <button
                                 onClick={handleLogin}
-                                className="hover:bg-purple-400 text-sm text-white font-bold bg-purple-500 rounded-sm h-8 w-18 px-2 ml-4"
+                                className="hover:bg-purple-600 text-sm text-white font-bold bg-purple-500 rounded-md h-8 w-18 px-2 ml-4"
                             >
                                 Learn a lineup
                             </button>

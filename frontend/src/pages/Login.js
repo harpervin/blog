@@ -1,5 +1,5 @@
 // React
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 // React Redux
 import { useDispatch } from "react-redux";
@@ -9,8 +9,7 @@ import { reduxLogin } from "../util/actions/auth";
 import { Link, useNavigate } from "react-router-dom";
 
 // Assets
-import { backendHomepage, login } from "../api/backend";
-import jett from "../assets/jettposter.jpg";
+import { login } from "../api/backend";
 
 // Setting Cookies
 import {

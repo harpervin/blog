@@ -1,6 +1,6 @@
 import Cookies from "js-cookie";
 
-const accessTokenExpMinutes = 1;
+const accessTokenExpMinutes = 15;
 const accessTokenExpDate = new Date(
     new Date().getTime() + accessTokenExpMinutes * 60 * 1000
 );

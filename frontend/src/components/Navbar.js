@@ -22,7 +22,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { BiDotsVerticalRounded } from "react-icons/bi";
 
 export default function Navbar() {
-    const [user, setUser] = useState("");
     const [menu, setMenu] = useState(false);
     const dropdownRef = useRef(null);
 
@@ -44,14 +43,6 @@ export default function Navbar() {
 
     const dropdown = () => {
         setMenu(!menu);
-    };
-
-    const handleLogin = () => {
-        navigate("/login");
-    };
-
-    const handleRegister = () => {
-        navigate("/register");
     };
 
     useEffect(() => {
@@ -91,7 +82,6 @@ export default function Navbar() {
         if (access_token && refresh_token && username) {
             const username = Cookies.get("username");
             dispatch(reduxLogin(username));
-            setUser(username);
         } else if (!access_token && refresh_token) {
             checkTokens();
         } else {
@@ -126,15 +116,15 @@ export default function Navbar() {
                     <div className="flex items-center px-6" ref={dropdownRef}>
                         {isAuthenticated && (
                             <AiOutlineUser
-                                size={30}
-                                className="text-2xl text-black transition ease-in-out delay-80 hover:-translate-y-1 hover:scale-110 hover:text-indigo-500 duration-100"
+                                size={28}
+                                className="text-2xl text-black transition ease-in-out delay-80 rounded-md  hover:bg-purple-200 duration-100 h-10 w-10 p-2"
                                 onClick={dropdown}
                             />
                         )}
                         {menu && (
                             <div class="relative inline-block text-left">
                                 <div
-                                    class="absolute right-0 z-10 mt-8 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                                    class="absolute right-0 z-10 mt-5 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                                     role="menu"
                                     aria-orientation="vertical"
                                     aria-labelledby="menu-button"
