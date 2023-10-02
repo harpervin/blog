@@ -14,7 +14,6 @@ import { login } from "../api/backend";
 // Setting Cookies
 import {
     setAccessToken,
-    setRefreshToken,
     setUsername,
 } from "../util/setCookies";
 
@@ -57,13 +56,11 @@ export default function Login() {
                     console.log("response ok");
                     const data = response.data;
                     const accessToken = data.accessToken;
-                    const refreshToken = data.refreshToken;
                     const username = data.username;
 
-                    console.log(accessToken);
+                    console.log(data);
 
                     setAccessToken(accessToken);
-                    setRefreshToken(refreshToken);
                     setUsername(username);
 
                     dispatch(reduxLogin(username));

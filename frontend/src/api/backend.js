@@ -13,8 +13,22 @@ async function getBlog(id) {
     return blog;
 }
 
-async function lineups() {
-    const response = await axios.get("http://localhost:5000/api/lineups");
+async function lineups(data) {
+    const access_token = data.access_token;
+    const username = data.username;
+
+    console.log("sending req to express");
+    console.log(username);
+
+
+    // Send access token, username in request headers
+    const response = await axios.post("http://localhost:5000/api/lineups", 
+        // headers: {
+        //     Authorization: `Bearer ${access_token}`,
+        //     Username: username,
+        // },
+        data,
+    );
     // const userInfo = response.data;
     console.log("response: ", response);
     return response;

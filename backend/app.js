@@ -3,10 +3,11 @@ import cors from "cors";
 import { config } from "dotenv";
 import routes from "./routes/index.js";
 import connectToMongoDB from "./db/index.js";
+import cookieParser from "cookie-parser";
 
 config();
 const app = express();
-// app.use(cookieParser(process.env.COOKIE_SECRET_KEY));
+app.use(cookieParser(process.env.COOKIE_SECRET_KEY));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

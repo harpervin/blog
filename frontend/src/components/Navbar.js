@@ -12,7 +12,7 @@ import Cookies from "js-cookie";
 
 // Backend functions
 import { getNewTokens } from "../api/backend";
-import { setAccessToken, setRefreshToken } from "../util/setCookies";
+import { setAccessToken } from "../util/setCookies";
 
 // React Icons
 import { AiOutlineUser } from "react-icons/ai";
@@ -34,7 +34,6 @@ export default function Navbar() {
 
     const handleLogout = () => {
         Cookies.remove("access_token");
-        Cookies.remove("refresh_token");
         Cookies.remove("username");
         dispatch(reduxLogout());
         setMenu(false);
@@ -65,29 +64,16 @@ export default function Navbar() {
         };
     }, []);
 
-    const access_token = Cookies.get("access_token");
-    const refresh_token = Cookies.get("refresh_token");
     const username = Cookies.get("username");
 
-    const checkTokens = async () => {
-        const response = await getNewTokens(refresh_token);
-        const newAccessToken = response.accessToken;
-        const newRefreshToken = response.refreshToken;
-        setAccessToken(newAccessToken);
-        setRefreshToken(newRefreshToken);
-        dispatch(reduxLogin(username));
-    };
-
     useEffect(() => {
-        if (access_token && refresh_token && username) {
+        if (username) {
             const username = Cookies.get("username");
             dispatch(reduxLogin(username));
-        } else if (!access_token && refresh_token) {
-            checkTokens();
         } else {
             dispatch(reduxLogout());
         }
-    }, [dispatch, access_token, refresh_token]);
+    }, [dispatch, username]);
 
     return (
         <div className="flex justify-center">

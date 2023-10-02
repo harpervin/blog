@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 
-export function newAccessToken(user) {
+export function generateAccessToken(user) {
     const accessToken = jwt.sign(
         { user_id: user._id },
         process.env.ACCESS_SECRET_KEY,
@@ -11,7 +11,7 @@ export function newAccessToken(user) {
     return accessToken;
 }
 
-export function newRefreshToken(user) {
+export function generateRefreshToken(user) {
     // Creating refresh token
     const refreshToken = jwt.sign(
         { user_id: user._id },

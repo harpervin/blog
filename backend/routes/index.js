@@ -3,8 +3,12 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
 import User from "../models/user.model.js";
+import RefreshTokenModel from "../models/refreshToken.model.js";
 import authenticateToken from "../middlewares/index.js";
-import { newAccessToken, newRefreshToken } from "../controller/auth.js";
+import {
+    generateAccessToken,
+    generateRefreshToken,
+} from "../controller/auth.js";
 
 const router = express.Router();
 
@@ -24,27 +28,37 @@ router.post("/login", async (req, res) => {
             return res.status(400).json({ error: "Invalid password" });
         }
 
-        console.log(user._doc);
-
         // Creating access token
-        const accessToken = jwt.sign(
-            { user_id: user._id },
-            process.env.ACCESS_SECRET_KEY,
-            {
-                expiresIn: "15m",
-            }
-        );
+        const newAccessToken = generateAccessToken(user);
 
-        // Creating access token
-        const refreshToken = jwt.sign(
-            { user_id: user._id },
-            process.env.REFRESH_SECRET_KEY,
-            {
-                expiresIn: "1d",
-            }
-        );
+        console.log(newAccessToken);
 
-        // Sending success message and JWT
+        // Creating refresh token
+        const newRefreshToken = generateRefreshToken(user);
+
+        // Check for existing refresh token
+        const existingRefreshTokenDoc = await RefreshTokenModel.findOne({
+            username: user.username,
+        });
+
+        // Update existing refresh token
+        if (existingRefreshTokenDoc) {
+            existingRefreshTokenDoc.refreshToken = newRefreshToken;
+            await existingRefreshTokenDoc.save();
+        } else {
+            const refreshTokenDoc = new RefreshTokenModel({
+                username: user.username,
+                token: newRefreshToken,
+            });
+            await refreshTokenDoc.save();
+        }
+
+        // Sending success message and access token to client
+        return res
+            .status(200)
+            .json({ accessToken: newAccessToken, username: user.username });
+
+        // Sending success message, access + refresh tokens + username to client
         return res
             .status(200)
             .json({ accessToken, refreshToken, username: user.username });
@@ -108,6 +122,10 @@ router.post("/getNewAccessToken", (req, res) => {
     }
 });
 
-router.get("/lineups", (req, res) => {});
+router.post("/lineups", authenticateToken, (req, res) => {
+    // const newAccessToken = req.newAccessToken;
+    // console.log("newtoken:", newAccessToken);
+    // return res.status(210).json({ accessToken: newAccessToken });
+});
 
 export default router;
